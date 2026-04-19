@@ -32,6 +32,7 @@ ApplyPilot/
 │   ├── app/
 │   ├── components/
 │   ├── lib/
+│   ├── middleware.ts
 │   └── public/
 ├── .gitignore
 ├── CHANGELOG.md
@@ -56,11 +57,18 @@ ApplyPilot/
 - `services/`: business logic layer
 - `alembic/`: database migration history
 
+## Auth Flow
+
+1. The frontend uses `Supabase Auth` for email/password sign-up and sign-in.
+2. Frontend middleware protects `/app/*` routes by checking the current Supabase session.
+3. Authenticated frontend requests send the Supabase access token as a bearer token to the backend.
+4. The backend verifies the token and extracts the current user identity for future ownership enforcement.
+
 ## High-Level Flow
 
 1. User signs in through `Supabase Auth`.
-2. Frontend calls versioned backend API routes.
-3. Backend validates request context and processes application logic.
+2. Frontend calls versioned backend API routes with the current access token.
+3. Backend validates the bearer token and processes application logic.
 4. Backend reads and writes application data in `PostgreSQL`.
 
 ## MVP Core Schema
@@ -86,16 +94,18 @@ The backend scaffold currently includes:
 
 - app entrypoint and versioned routing
 - a health endpoint at `GET /api/v1/health`
+- an auth identity endpoint at `GET /api/v1/auth/me`
 - environment-based settings
 - starter error handling
 - SQLAlchemy models for the MVP core schema
 - Alembic migration setup with an initial schema migration
+- Supabase bearer-token verification and a current-user dependency pattern
 
 ## Intentional Omissions
 
 The scaffold does not yet include:
 
-- auth verification implementation
+- profile creation or sync logic after sign-up
 - database CRUD services or repositories
 - seed data
 - deployment configuration

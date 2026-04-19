@@ -7,10 +7,10 @@ ApplyPilot is a personal job-search CRM for active job seekers to track applicat
 This repository is in early foundation stage.
 
 - Product scope is defined at an MVP level only.
-- The frontend has been scaffolded with `Next.js`, `TypeScript`, and the App Router.
-- The backend has been scaffolded with `FastAPI`, `SQLAlchemy`, and `Alembic`.
+- The frontend has been scaffolded with `Next.js`, `TypeScript`, the App Router, and `Supabase Auth`.
+- The backend has been scaffolded with `FastAPI`, `SQLAlchemy`, `Alembic`, and Supabase bearer-token verification.
 - The initial PostgreSQL schema and migration are in place.
-- Authentication and business logic are not implemented yet.
+- CRUD business logic is not implemented yet.
 
 ## Planned Stack
 
@@ -61,7 +61,7 @@ The current MVP explicitly excludes:
 
 ## Next Steps
 
-1. Add CRUD APIs for applications, contacts, tasks, and notes.
-2. Add authentication flow using `Supabase Auth`.
-3. Connect the frontend routes to real backend data.
-4. Add deployment and CI workflows once the app logic exists.
+1. Create or sync `profiles` records for authenticated users.
+2. Add CRUD APIs for applications, contacts, tasks, and notes.
+3. Enforce ownership using the authenticated user → profile relationship.
+4. Connect dashboard views to real backend data.

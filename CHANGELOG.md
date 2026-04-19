@@ -12,3 +12,4 @@ All notable changes to this repository will be documented in this file.
 - Added the initial `FastAPI` backend scaffold with versioned routing and health checks
 - Added backend settings, error handling, and database/auth preparation modules
 - Added the initial PostgreSQL database layer with SQLAlchemy models and Alembic migrations
+- Added Supabase Auth login, signup, frontend route protection, and backend bearer-token verification

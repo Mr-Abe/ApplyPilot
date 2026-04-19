@@ -1,3 +1,4 @@
+import { LoginForm } from '@/components/auth/login-form';
 import { PageIntro } from '@/components/ui/page-intro';
 
 export default function LoginPage() {
@@ -5,10 +6,11 @@ export default function LoginPage() {
     <div className="container auth-page">
       <section className="card auth-card">
         <PageIntro
-          eyebrow="Authentication placeholder"
+          eyebrow="Supabase Auth"
           title="Log in to ApplyPilot"
-          description="This route is ready for the future Supabase Auth login flow. No real authentication is implemented yet."
+          description="Use your Supabase email and password credentials to access the protected job-search dashboard."
         />
+        <LoginForm />
       </section>
     </div>
   );

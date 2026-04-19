@@ -5,8 +5,10 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 ## Included
 
 - `Next.js` App Router structure
-- public marketing and auth placeholder routes
+- public marketing and auth routes
 - shared dashboard shell for `/app/*`
+- Supabase Auth client setup and session handling
+- middleware-based route protection for `/app/*`
 - minimal global styling
 - `ESLint` and `Prettier` configuration
 
@@ -25,12 +27,15 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 
 ## Local Setup
 
-1. From `frontend/`, install dependencies with `npm install`.
-2. Start the dev server with `npm run dev`.
-3. Open `http://localhost:3000`.
+1. Copy `.env.example` to `.env.local`.
+2. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+3. Set `NEXT_PUBLIC_API_BASE_URL` to your backend origin, such as `http://localhost:8000`.
+4. Install dependencies with `npm install`.
+5. Start the dev server with `npm run dev`.
+6. Open `http://localhost:3000`.
 
 ## Notes
 
-- Authentication is not implemented yet.
-- Business logic and data fetching are not implemented yet.
-- The `/app` route group is structured so route protection can be added later.
+- Authentication uses `Supabase Auth` with email/password only.
+- `/app/*` routes are protected by middleware.
+- The dashboard includes a simple authenticated backend check against `/api/v1/auth/me`.

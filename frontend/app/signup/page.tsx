@@ -1,3 +1,4 @@
+import { SignupForm } from '@/components/auth/signup-form';
 import { PageIntro } from '@/components/ui/page-intro';
 
 export default function SignupPage() {
@@ -5,10 +6,11 @@ export default function SignupPage() {
     <div className="container auth-page">
       <section className="card auth-card">
         <PageIntro
-          eyebrow="Authentication placeholder"
+          eyebrow="Supabase Auth"
           title="Create your ApplyPilot account"
-          description="This route is reserved for future signup and onboarding flows once authentication is wired up."
+          description="Sign up with email and password to start tracking applications, contacts, and follow-up tasks."
         />
+        <SignupForm />
       </section>
     </div>
   );

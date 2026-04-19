@@ -1,3 +1,4 @@
+import { AuthSessionPanel } from '@/components/auth/auth-session-panel';
 import { DashboardPageHeader } from '@/components/ui/dashboard-page-header';
 
 export default function AppHomePage() {
@@ -5,10 +6,11 @@ export default function AppHomePage() {
     <section className="page-stack">
       <DashboardPageHeader
         title="Dashboard"
-        description="This is the authenticated app shell landing page. It will become the main overview once data and auth are connected."
+        description="This protected area now expects a Supabase-authenticated session and is ready for real application data wiring."
       />
+      <AuthSessionPanel />
       <div className="card empty-state">
-        <p>Start here to review applications, tasks, and follow-ups across the job search workflow.</p>
+        <p>Next up is connecting applications, contacts, notes, and tasks to real backend CRUD endpoints.</p>
       </div>
     </section>
   );

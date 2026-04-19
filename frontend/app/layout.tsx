@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+
+import { AuthProvider } from '@/components/providers/auth-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -11,23 +13,25 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <div className="site-shell">
-          <header className="site-header">
-            <div className="container site-header__inner">
-              <Link className="brand" href="/">
-                ApplyPilot
-              </Link>
-              <nav className="site-nav" aria-label="Primary">
-                <Link href="/login">Login</Link>
-                <Link href="/signup">Sign up</Link>
-                <Link className="button button--small" href="/app">
-                  Open app
+        <AuthProvider>
+          <div className="site-shell">
+            <header className="site-header">
+              <div className="container site-header__inner">
+                <Link className="brand" href="/">
+                  ApplyPilot
                 </Link>
-              </nav>
-            </div>
-          </header>
-          <main>{children}</main>
-        </div>
+                <nav className="site-nav" aria-label="Primary">
+                  <Link href="/login">Login</Link>
+                  <Link href="/signup">Sign up</Link>
+                  <Link className="button button--small" href="/app">
+                    Open app
+                  </Link>
+                </nav>
+              </div>
+            </header>
+            <main>{children}</main>
+          </div>
+        </AuthProvider>
       </body>
     </html>
   );

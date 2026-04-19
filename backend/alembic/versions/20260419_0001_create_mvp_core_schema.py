@@ -32,8 +32,6 @@ application_status = sa.Enum(
 
 
 def upgrade() -> None:
-    bind = op.get_bind()
-    application_status.create(bind, checkfirst=True)
 
     op.create_table(
         "profiles",
