@@ -12,7 +12,7 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 - applications list, create, detail, edit, and archive flows
 - contacts list, create, edit, and delete flows
 - tasks list, create, edit, complete, and delete flows
-- application detail panels for linked contacts and follow-up tasks
+- application detail panels for linked contacts, follow-up tasks, and notes
 - minimal global styling
 - `ESLint` and `Prettier` configuration
 
@@ -44,4 +44,4 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 - `/app/*` routes are protected by middleware.
 - `/app/applications` is now backed by the real applications API.
 - `/app/contacts` and `/app/tasks` are backed by live authenticated backend APIs.
-- Application details can now add contacts and follow-up tasks without leaving the page.
+- Application details now act as a working command center for one opportunity, including contacts, tasks, and notes.

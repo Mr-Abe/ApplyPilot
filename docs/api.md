@@ -2,7 +2,7 @@
 
 ## Status
 
-The backend now includes live health, auth identity, applications, contacts, application-contact linking, and follow-up tasks endpoints.
+The backend now includes live health, auth identity, applications, contacts, application-contact linking, follow-up tasks, and application notes endpoints.
 
 ## Implemented Endpoints
 
@@ -15,6 +15,10 @@ The backend now includes live health, auth identity, applications, contacts, app
 - `DELETE /api/v1/applications/{id}`
 - `POST /api/v1/applications/{id}/contacts/{contact_id}`
 - `DELETE /api/v1/applications/{id}/contacts/{contact_id}`
+- `GET /api/v1/applications/{id}/notes`
+- `POST /api/v1/applications/{id}/notes`
+- `PATCH /api/v1/applications/{id}/notes/{note_id}`
+- `DELETE /api/v1/applications/{id}/notes/{note_id}`
 - `GET /api/v1/contacts`
 - `POST /api/v1/contacts`
 - `GET /api/v1/contacts/{id}`
@@ -50,6 +54,13 @@ The backend now includes live health, auth identity, applications, contacts, app
 - `status` with `open` or `completed`
 - `timing` with `all`, `overdue`, or `upcoming`
 
+## Notes Support
+
+Application notes support:
+
+- `note_type` with `general`, `interview`, `call`, or `followup`
+- create, edit, list, and delete flows scoped to one owned application
+
 ## Core MVP Resources
 
 The initial schema is prepared for:
@@ -63,7 +74,7 @@ The initial schema is prepared for:
 
 ## Ownership Model
 
-- Applications, contacts, tasks, and application-contact links are scoped to the authenticated user's `profile`.
+- Applications, contacts, tasks, notes, and application-contact links are scoped to the authenticated user's `profile`.
 - The backend resolves the current user from the Supabase bearer token.
 - A `profile` row is created automatically the first time an authenticated user uses these APIs.
 - Task `application_id` references and contact links are validated against the current profile.
@@ -72,9 +83,9 @@ The initial schema is prepared for:
 
 The next implementation pass should prioritize:
 
-- notes CRUD
 - dashboard-friendly summary endpoints
 - profile bootstrap improvements beyond the current lazy auto-create flow
+- optional contact-linked notes if they become necessary beyond the current application workspace
 
 ## Notes
 

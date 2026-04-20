@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { ApplicationContactsPanel } from '@/components/applications/application-contacts-panel';
 import { ApplicationForm } from '@/components/applications/application-form';
+import { ApplicationNotesPanel } from '@/components/applications/application-notes-panel';
 import { ApplicationTasksPanel } from '@/components/applications/application-tasks-panel';
 import {
   archiveApplication,
@@ -100,40 +101,52 @@ export function ApplicationDetailPage({ applicationId }: ApplicationDetailPagePr
       {successMessage ? <p className="auth-message auth-message--success">{successMessage}</p> : null}
       {errorMessage ? <p className="auth-message auth-message--error">{errorMessage}</p> : null}
 
-      <div className="card detail-card">
-        <div className="detail-card__header">
-          <div>
-            <p className="eyebrow">Application detail</p>
-            <h2>{application.company_name}</h2>
-            <p>{application.job_title}</p>
-          </div>
-          <div className="detail-card__actions">
-            <button className="button button--secondary button--small" onClick={() => setIsEditing((current) => !current)} type="button">
-              {isEditing ? 'Cancel edit' : 'Edit application'}
-            </button>
-            {!application.archived ? (
-              <button className="button button--small" disabled={isArchiving} onClick={handleArchive} type="button">
-                {isArchiving ? 'Archiving...' : 'Archive'}
+      <div className="workspace-grid">
+        <div className="card detail-card workspace-grid__primary">
+          <div className="detail-card__header">
+            <div>
+              <p className="eyebrow">Application workspace</p>
+              <h2>{application.company_name}</h2>
+              <p>{application.job_title}</p>
+            </div>
+            <div className="detail-card__actions">
+              <button className="button button--secondary button--small" onClick={() => setIsEditing((current) => !current)} type="button">
+                {isEditing ? 'Cancel edit' : 'Edit application'}
               </button>
-            ) : null}
+              {!application.archived ? (
+                <button className="button button--small" disabled={isArchiving} onClick={handleArchive} type="button">
+                  {isArchiving ? 'Archiving...' : 'Archive'}
+                </button>
+              ) : null}
+            </div>
+          </div>
+          <div className="detail-grid">
+            <p><strong>Status:</strong> <span className="application-status-chip">{application.status.replaceAll('_', ' ')}</span></p>
+            <p><strong>Applied:</strong> {formatDateLabel(application.date_applied)}</p>
+            <p><strong>Found:</strong> {formatDateLabel(application.date_found)}</p>
+            <p><strong>Next action due:</strong> {formatDateTimeLabel(application.next_action_due_at)}</p>
+            <p><strong>Location:</strong> {application.location || '—'}</p>
+            <p><strong>Work type:</strong> {application.work_type || '—'}</p>
+            <p><strong>Source:</strong> {application.source || '—'}</p>
+            <p><strong>Compensation:</strong> {formatCurrencyRange(application.salary_min, application.salary_max)}</p>
+            <p><strong>Resume:</strong> {application.resume_version || '—'}</p>
+            <p><strong>Cover letter:</strong> {application.cover_letter_version || '—'}</p>
+            <p className="detail-grid__full"><strong>Posting URL:</strong> {application.posting_url ? <Link href={application.posting_url}>Open posting</Link> : '—'}</p>
+            <p className="detail-grid__full"><strong>Notes summary:</strong> {application.notes_summary || '—'}</p>
           </div>
         </div>
-        <div className="detail-grid">
-          <p><strong>Status:</strong> {application.status.replaceAll('_', ' ')}</p>
-          <p><strong>Applied:</strong> {formatDateLabel(application.date_applied)}</p>
-          <p><strong>Found:</strong> {formatDateLabel(application.date_found)}</p>
-          <p><strong>Next action due:</strong> {formatDateTimeLabel(application.next_action_due_at)}</p>
-          <p><strong>Location:</strong> {application.location || '—'}</p>
-          <p><strong>Work type:</strong> {application.work_type || '—'}</p>
-          <p><strong>Source:</strong> {application.source || '—'}</p>
-          <p><strong>Compensation:</strong> {formatCurrencyRange(application.salary_min, application.salary_max)}</p>
-          <p><strong>Resume:</strong> {application.resume_version || '—'}</p>
-          <p><strong>Cover letter:</strong> {application.cover_letter_version || '—'}</p>
-          <p><strong>Next action:</strong> {application.next_action || '—'}</p>
-          <p><strong>Archived:</strong> {application.archived ? 'Yes' : 'No'}</p>
-          <p className="detail-grid__full"><strong>Posting URL:</strong> {application.posting_url ? <Link href={application.posting_url}>Open posting</Link> : '—'}</p>
-          <p className="detail-grid__full"><strong>Notes summary:</strong> {application.notes_summary || '—'}</p>
-        </div>
+
+        <aside className="card focus-card">
+          <p className="eyebrow">Today’s focus</p>
+          <h3>{application.next_action || 'No next action set yet'}</h3>
+          <p className="focus-card__meta">Due {formatDateTimeLabel(application.next_action_due_at)}</p>
+          <div className="focus-list">
+            <p><strong>Archived:</strong> {application.archived ? 'Yes' : 'No'}</p>
+            <p><strong>Status:</strong> {application.status.replaceAll('_', ' ')}</p>
+            <p><strong>Source:</strong> {application.source || '—'}</p>
+          </div>
+          <p className="focus-card__summary">{application.notes_summary || 'Use notes below to keep interview feedback, calls, and follow-ups organized.'}</p>
+        </aside>
       </div>
 
       {isEditing ? (
@@ -142,8 +155,11 @@ export function ApplicationDetailPage({ applicationId }: ApplicationDetailPagePr
         </div>
       ) : null}
 
-      <ApplicationContactsPanel applicationId={applicationId} />
-      <ApplicationTasksPanel applicationId={applicationId} />
+      <div className="workspace-panels">
+        <ApplicationTasksPanel applicationId={applicationId} />
+        <ApplicationContactsPanel applicationId={applicationId} />
+        <ApplicationNotesPanel applicationId={applicationId} />
+      </div>
     </section>
   );
 }

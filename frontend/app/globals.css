@@ -490,6 +490,96 @@ p {
   gap: 0.75rem;
 }
 
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+  gap: 1rem;
+}
+
+.workspace-grid__primary {
+  min-width: 0;
+}
+
+.workspace-panels {
+  display: grid;
+  gap: 1rem;
+}
+
+.focus-card {
+  padding: 1.5rem;
+}
+
+.focus-card h3 {
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+.focus-card__meta,
+.focus-card__summary,
+.note-meta-row {
+  color: var(--muted);
+}
+
+.focus-card__meta {
+  margin-bottom: 1rem;
+}
+
+.focus-card__summary {
+  margin-top: 1rem;
+}
+
+.focus-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.application-status-chip,
+.note-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.application-status-chip {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.note-type-badge--general {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.note-type-badge--interview {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.note-type-badge--call {
+  background: #cffafe;
+  color: #0f766e;
+}
+
+.note-type-badge--followup {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.note-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.note-body {
+  white-space: pre-wrap;
+}
+
 .resource-card__meta,
 .detail-grid {
   display: grid;
@@ -571,6 +661,7 @@ p {
 }
 
 @media (max-width: 900px) {
+  .workspace-grid,
   .form-grid,
   .form-grid--filters,
   .resource-card__meta,

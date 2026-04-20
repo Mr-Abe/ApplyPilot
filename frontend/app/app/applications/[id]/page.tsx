@@ -12,7 +12,7 @@ export default function ApplicationPage({ params }: ApplicationPageProps) {
     <section className="page-stack">
       <DashboardPageHeader
         title="Application details"
-        description="Review the application record, update key details, and archive the role when it is no longer active."
+        description="Use this workspace to manage the opportunity, next action, contacts, follow-up tasks, and notes in one place."
       />
       <ApplicationDetailPage applicationId={params.id} />
     </section>

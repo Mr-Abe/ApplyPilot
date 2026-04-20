@@ -71,6 +71,13 @@ ApplyPilot/
 3. The backend resolves the current profile and enforces ownership through `profile_id`.
 4. The applications service applies filtering, search, sorting, and CRUD operations against PostgreSQL.
 
+## Application Workspace Flow
+
+1. An authenticated user opens one application detail page.
+2. The frontend loads the application summary plus linked contacts, linked tasks, and application notes.
+3. Notes, tasks, and contact links are managed from the same page to reduce context switching during daily follow-up work.
+4. The backend enforces ownership on every related record through the current profile and parent application.
+
 ## MVP Core Schema
 
 - `profiles`: local profile record mapped to a `Supabase Auth` user
@@ -103,13 +110,14 @@ The backend scaffold currently includes:
 - applications CRUD with profile-scoped ownership enforcement
 - contacts CRUD with application linking
 - tasks CRUD with due-date filtering and completion support
+- application-linked notes CRUD with note types for interview/call/follow-up context
 
 ## Intentional Omissions
 
 The scaffold does not yet include:
 
-- notes CRUD APIs
 - richer domain services beyond the current applications, contacts, and tasks features
+- richer domain services beyond the current applications, contacts, tasks, and notes features
 - seed data
 - deployment configuration
 - CI workflows

@@ -12,6 +12,7 @@ This directory contains the initial `FastAPI` backend scaffold for ApplyPilot.
 - contacts CRUD endpoints under `/api/v1/contacts`
 - task CRUD endpoints under `/api/v1/tasks`
 - application-to-contact link endpoints under `/api/v1/applications/{id}/contacts/{contact_id}`
+- application note CRUD endpoints under `/api/v1/applications/{id}/notes`
 - environment-based settings via `pydantic-settings`
 - `SQLAlchemy` models for the MVP core schema
 - `Alembic` migrations for PostgreSQL
@@ -61,6 +62,10 @@ backend/
 - `DELETE /api/v1/applications/{id}`
 - `POST /api/v1/applications/{id}/contacts/{contact_id}`
 - `DELETE /api/v1/applications/{id}/contacts/{contact_id}`
+- `GET /api/v1/applications/{id}/notes`
+- `POST /api/v1/applications/{id}/notes`
+- `PATCH /api/v1/applications/{id}/notes/{note_id}`
+- `DELETE /api/v1/applications/{id}/notes/{note_id}`
 - `GET /api/v1/contacts`
 - `POST /api/v1/contacts`
 - `GET /api/v1/contacts/{id}`
@@ -92,3 +97,4 @@ backend/
 - Applications support filtering, search, sorting, update, archive, and deletion.
 - Contacts support CRUD plus linking and unlinking from owned applications.
 - Tasks support CRUD, completion, due-date filtering, and profile-scoped application linking.
+- Notes support application-scoped CRUD with simple typed notes for general, interview, call, and follow-up context.

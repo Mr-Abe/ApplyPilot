@@ -26,6 +26,8 @@ from app.services.applications import (
 )
 from app.services.contacts import link_contact_to_application, unlink_contact_from_application
 from app.schemas.contact import ContactRead
+from app.schemas.note import NoteCreate, NoteListResponse, NoteRead, NoteUpdate
+from app.services.notes import create_note, delete_note, list_notes, update_note
 
 router = APIRouter(prefix='/applications')
 
@@ -127,4 +129,54 @@ def unlink_contact_from_application_endpoint(
         application_id=application_id,
         contact_id=contact_id,
     )
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.get('/{application_id}/notes', response_model=NoteListResponse)
+def read_application_notes(
+    application_id: UUID,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> NoteListResponse:
+    items, total = list_notes(session, profile_id=profile.id, application_id=application_id)
+    return NoteListResponse(items=[NoteRead.model_validate(item) for item in items], total=total)
+
+
+@router.post('/{application_id}/notes', response_model=NoteRead, status_code=status.HTTP_201_CREATED)
+def create_application_note_endpoint(
+    application_id: UUID,
+    payload: NoteCreate,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> NoteRead:
+    note = create_note(session, profile_id=profile.id, application_id=application_id, payload=payload)
+    return NoteRead.model_validate(note)
+
+
+@router.patch('/{application_id}/notes/{note_id}', response_model=NoteRead)
+def update_application_note_endpoint(
+    application_id: UUID,
+    note_id: UUID,
+    payload: NoteUpdate,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> NoteRead:
+    note = update_note(
+        session,
+        profile_id=profile.id,
+        application_id=application_id,
+        note_id=note_id,
+        payload=payload,
+    )
+    return NoteRead.model_validate(note)
+
+
+@router.delete('/{application_id}/notes/{note_id}', status_code=status.HTTP_204_NO_CONTENT)
+def delete_application_note_endpoint(
+    application_id: UUID,
+    note_id: UUID,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> Response:
+    delete_note(session, profile_id=profile.id, application_id=application_id, note_id=note_id)
     return Response(status_code=status.HTTP_204_NO_CONTENT)

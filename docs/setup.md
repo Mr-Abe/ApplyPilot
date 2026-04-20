@@ -10,7 +10,7 @@ At this stage, it contains:
 - a runnable backend scaffold in `backend/`
 - an initial PostgreSQL schema and migration setup
 - Supabase Auth wiring for frontend login and protected app routes
-- MVP applications, contacts, and follow-up tasks across the stack
+- MVP applications, contacts, follow-up tasks, and application notes across the stack
 - planning documents
 
 ## Frontend Setup
@@ -46,7 +46,7 @@ Copy `frontend/.env.example` to `frontend/.env.local` and set:
 - `/app/applications` now supports list, create, view, edit, and archive flows.
 - `/app/contacts` now supports list, create, edit, and delete flows.
 - `/app/tasks` now supports list, create, edit, complete, and delete flows.
-- Application detail pages can now link contacts and add follow-up tasks.
+- Application detail pages can now link contacts, add follow-up tasks, and manage notes from one workspace.
 
 ### Frontend Tooling
 
@@ -100,6 +100,6 @@ Copy `backend/.env.example` to `backend/.env` and set at least:
 
 ## Recommended Next Setup Work
 
-1. Build notes CRUD using the same ownership pattern.
-2. Connect the dashboard home view to real summary data.
-3. Add lightweight dashboards for overdue follow-ups and pipeline counts.
+1. Connect the dashboard home view to real summary data.
+2. Add lightweight dashboards for overdue follow-ups and pipeline counts.
+3. Expand reporting and settings where the live backend now supports richer workflows.

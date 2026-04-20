@@ -16,3 +16,4 @@ All notable changes to this repository will be documented in this file.
 - Added MVP applications CRUD across the backend and frontend with ownership enforcement, filtering, search, sorting, and archive support
 - Added MVP contacts CRUD with application linking across the backend and frontend
 - Added MVP follow-up tasks CRUD with completion and overdue/upcoming filtering across the backend and frontend
+- Added MVP application notes CRUD with typed notes and integrated the application detail page into a fuller command center workspace
