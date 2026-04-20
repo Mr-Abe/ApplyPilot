@@ -1,6 +1,7 @@
 from typing import Any
 
 from fastapi import FastAPI, Request
+from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
@@ -25,10 +26,10 @@ async def app_error_handler(_: Request, exc: AppError) -> JSONResponse:
     return JSONResponse(
         status_code=exc.status_code,
         content={
-            "error": {
-                "code": exc.code,
-                "message": exc.message,
-                "details": exc.details,
+            'error': {
+                'code': exc.code,
+                'message': exc.message,
+                'details': exc.details,
             }
         },
     )
@@ -38,10 +39,10 @@ async def validation_error_handler(_: Request, exc: RequestValidationError) -> J
     return JSONResponse(
         status_code=422,
         content={
-            "error": {
-                "code": "validation_error",
-                "message": "Request validation failed.",
-                "details": {"issues": exc.errors()},
+            'error': {
+                'code': 'validation_error',
+                'message': 'Request validation failed.',
+                'details': {'issues': jsonable_encoder(exc.errors())},
             }
         },
     )
@@ -51,10 +52,10 @@ async def unhandled_error_handler(_: Request, exc: Exception) -> JSONResponse:
     return JSONResponse(
         status_code=500,
         content={
-            "error": {
-                "code": "internal_server_error",
-                "message": "An unexpected error occurred.",
-                "details": {"exception_type": exc.__class__.__name__},
+            'error': {
+                'code': 'internal_server_error',
+                'message': 'An unexpected error occurred.',
+                'details': {'exception_type': exc.__class__.__name__},
             }
         },
     )

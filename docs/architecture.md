@@ -51,7 +51,7 @@ ApplyPilot/
 
 - `api/`: request routing, versioned endpoints, and request dependencies
 - `core/`: settings, security helpers, and shared error handling
-- `db/`: SQLAlchemy base definitions, database connectivity, and future session usage
+- `db/`: SQLAlchemy base definitions, database connectivity, and session usage
 - `models/`: SQLAlchemy ORM models for the MVP schema
 - `schemas/`: request and response schemas
 - `services/`: business logic layer
@@ -62,18 +62,18 @@ ApplyPilot/
 1. The frontend uses `Supabase Auth` for email/password sign-up and sign-in.
 2. Frontend middleware protects `/app/*` routes by checking the current Supabase session.
 3. Authenticated frontend requests send the Supabase access token as a bearer token to the backend.
-4. The backend verifies the token and extracts the current user identity for future ownership enforcement.
+4. The backend verifies the token, resolves the current user, and can map that user to a local `profile`.
 
-## High-Level Flow
+## Applications Flow
 
-1. User signs in through `Supabase Auth`.
-2. Frontend calls versioned backend API routes with the current access token.
-3. Backend validates the bearer token and processes application logic.
-4. Backend reads and writes application data in `PostgreSQL`.
+1. An authenticated user opens `/app/applications`.
+2. The frontend calls `GET /api/v1/applications` with the Supabase bearer token.
+3. The backend resolves the current profile and enforces ownership through `profile_id`.
+4. The applications service applies filtering, search, sorting, and CRUD operations against PostgreSQL.
 
 ## MVP Core Schema
 
-- `profiles`: application-owned profile record mapped to a `Supabase Auth` user
+- `profiles`: local profile record mapped to a `Supabase Auth` user
 - `applications`: tracked opportunities and current job-search status
 - `contacts`: recruiters, hiring managers, referrals, and networking contacts
 - `application_contacts`: many-to-many links between applications and contacts
@@ -98,15 +98,16 @@ The backend scaffold currently includes:
 - environment-based settings
 - starter error handling
 - SQLAlchemy models for the MVP core schema
-- Alembic migration setup with an initial schema migration
+- Alembic migration setup for the current schema
 - Supabase bearer-token verification and a current-user dependency pattern
+- applications CRUD with profile-scoped ownership enforcement
 
 ## Intentional Omissions
 
 The scaffold does not yet include:
 
-- profile creation or sync logic after sign-up
-- database CRUD services or repositories
+- contacts, tasks, and notes CRUD APIs
+- richer domain services beyond the current applications feature
 - seed data
 - deployment configuration
 - CI workflows

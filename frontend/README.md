@@ -9,6 +9,7 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 - shared dashboard shell for `/app/*`
 - Supabase Auth client setup and session handling
 - middleware-based route protection for `/app/*`
+- applications list, create, detail, edit, and archive flows
 - minimal global styling
 - `ESLint` and `Prettier` configuration
 
@@ -38,4 +39,4 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 
 - Authentication uses `Supabase Auth` with email/password only.
 - `/app/*` routes are protected by middleware.
-- The dashboard includes a simple authenticated backend check against `/api/v1/auth/me`.
+- `/app/applications` is now backed by the real applications API.

@@ -8,13 +8,15 @@ This directory contains the initial `FastAPI` backend scaffold for ApplyPilot.
 - versioned API routing under `/api/v1`
 - health endpoint
 - authenticated identity endpoint at `GET /api/v1/auth/me`
+- applications CRUD endpoints under `/api/v1/applications`
 - environment-based settings via `pydantic-settings`
 - `SQLAlchemy` models for the MVP core schema
 - `Alembic` migrations for PostgreSQL
 - starter error handling pattern
 - database session helpers for future `PostgreSQL` integration
 - Supabase bearer-token verification and current-user dependency helpers
-- basic backend test scaffold
+- profile auto-creation for authenticated application access
+- backend test coverage for health, auth, and critical application flows
 
 ## Structure
 
@@ -49,6 +51,11 @@ backend/
 
 - `GET /api/v1/health`
 - `GET /api/v1/auth/me`
+- `GET /api/v1/applications`
+- `POST /api/v1/applications`
+- `GET /api/v1/applications/{id}`
+- `PATCH /api/v1/applications/{id}`
+- `DELETE /api/v1/applications/{id}`
 
 ## Environment Variables
 
@@ -65,5 +72,6 @@ backend/
 ## Notes
 
 - Authentication currently supports email/password sessions from `Supabase Auth`.
-- The backend verifies Supabase access tokens and exposes a current-user dependency for future ownership enforcement.
-- Database models and migrations are limited to the MVP core schema.
+- The backend verifies Supabase access tokens and exposes a current-user dependency for ownership enforcement.
+- The first authenticated applications request auto-creates a local `profile` if one does not already exist.
+- Applications support filtering, search, sorting, update, archive, and deletion.

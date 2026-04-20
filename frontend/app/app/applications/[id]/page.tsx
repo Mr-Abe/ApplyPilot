@@ -1,21 +1,20 @@
+import { ApplicationDetailPage } from '@/components/applications/application-detail-page';
 import { DashboardPageHeader } from '@/components/ui/dashboard-page-header';
 
-interface ApplicationDetailPageProps {
+interface ApplicationPageProps {
   params: {
     id: string;
   };
 }
 
-export default function ApplicationDetailPage({ params }: ApplicationDetailPageProps) {
+export default function ApplicationPage({ params }: ApplicationPageProps) {
   return (
     <section className="page-stack">
       <DashboardPageHeader
-        title={`Application ${params.id}`}
-        description="This detail route is ready for a future application overview with notes, contacts, and interview history."
+        title="Application details"
+        description="Review the application record, update key details, and archive the role when it is no longer active."
       />
-      <div className="card empty-state">
-        <p>No application detail data is connected yet. The dynamic route is in place for future implementation.</p>
-      </div>
+      <ApplicationDetailPage applicationId={params.id} />
     </section>
   );
 }

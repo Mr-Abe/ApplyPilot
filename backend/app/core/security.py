@@ -24,12 +24,23 @@ def ensure_supabase_auth_is_configured() -> tuple[str, str]:
 def verify_supabase_access_token(token: str) -> dict[str, Any]:
     supabase_url, jwt_secret = ensure_supabase_auth_is_configured()
     issuer = f'{supabase_url}/auth/v1'
+    jwks_url = f'{supabase_url}/auth/v1/.well-known/jwks.json'
 
     try:
+        unverified_header = jwt.get_unverified_header(token)
+        alg = unverified_header.get('alg', 'HS256')
+
+        if alg in ['RS256', 'ES256']:
+            jwks_client = jwt.PyJWKClient(jwks_url)
+            signing_key = jwks_client.get_signing_key_from_jwt(token)
+            key = signing_key.key
+        else:
+            key = jwt_secret
+
         return jwt.decode(
             token,
-            jwt_secret,
-            algorithms=['HS256'],
+            key,
+            algorithms=[alg],
             audience='authenticated',
             issuer=issuer,
             options={'require': ['exp', 'sub']},

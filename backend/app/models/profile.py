@@ -3,8 +3,7 @@ from __future__ import annotations
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import String
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, TimestampMixin, UUIDPrimaryKeyMixin
@@ -18,14 +17,14 @@ if TYPE_CHECKING:
 
 
 class Profile(UUIDPrimaryKeyMixin, TimestampMixin, Base):
-    __tablename__ = "profiles"
+    __tablename__ = 'profiles'
 
-    supabase_user_id: Mapped[uuid.UUID] = mapped_column(UUID(as_uuid=True), unique=True, nullable=False)
+    supabase_user_id: Mapped[uuid.UUID] = mapped_column(Uuid, unique=True, nullable=False)
     email: Mapped[str | None] = mapped_column(String(320), nullable=True)
     display_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
 
-    applications: Mapped[list[Application]] = relationship(back_populates="profile", cascade="all, delete-orphan")
-    contacts: Mapped[list[Contact]] = relationship(back_populates="profile", cascade="all, delete-orphan")
-    application_contacts: Mapped[list[ApplicationContact]] = relationship(back_populates="profile", cascade="all, delete-orphan")
-    tasks: Mapped[list[Task]] = relationship(back_populates="profile", cascade="all, delete-orphan")
-    notes: Mapped[list[Note]] = relationship(back_populates="profile", cascade="all, delete-orphan")
+    applications: Mapped[list[Application]] = relationship(back_populates='profile', cascade='all, delete-orphan')
+    contacts: Mapped[list[Contact]] = relationship(back_populates='profile', cascade='all, delete-orphan')
+    application_contacts: Mapped[list[ApplicationContact]] = relationship(back_populates='profile', cascade='all, delete-orphan')
+    tasks: Mapped[list[Task]] = relationship(back_populates='profile', cascade='all, delete-orphan')
+    notes: Mapped[list[Note]] = relationship(back_populates='profile', cascade='all, delete-orphan')

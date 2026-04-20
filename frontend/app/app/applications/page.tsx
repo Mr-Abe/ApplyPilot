@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { ApplicationsListPage } from '@/components/applications/applications-list-page';
 import { DashboardPageHeader } from '@/components/ui/dashboard-page-header';
 
 export default function ApplicationsPage() {
@@ -6,13 +6,10 @@ export default function ApplicationsPage() {
     <section className="page-stack">
       <DashboardPageHeader
         title="Applications"
-        description="Manage tracked opportunities, statuses, and next steps from one place."
+        description="Track job applications, filter by status, search by company or title, and keep next actions in one place."
         action={{ label: 'New application', href: '/app/applications/new' }}
       />
-      <div className="card empty-state">
-        <p>This placeholder page will list tracked applications once data fetching is implemented.</p>
-        <Link href="/app/applications/new">Go to the new application page</Link>
-      </div>
+      <ApplicationsListPage />
     </section>
   );
 }

@@ -13,3 +13,4 @@ All notable changes to this repository will be documented in this file.
 - Added backend settings, error handling, and database/auth preparation modules
 - Added the initial PostgreSQL database layer with SQLAlchemy models and Alembic migrations
 - Added Supabase Auth login, signup, frontend route protection, and backend bearer-token verification
+- Added MVP applications CRUD across the backend and frontend with ownership enforcement, filtering, search, sorting, and archive support
