@@ -8,8 +8,8 @@ function readEnvValue(name: string): string | null {
 }
 
 export function getSupabasePublicConfig(): { url: string; anonKey: string } | null {
-  const url = readEnvValue('NEXT_PUBLIC_SUPABASE_URL');
-  const anonKey = readEnvValue('NEXT_PUBLIC_SUPABASE_ANON_KEY');
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() || null;
+  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim() || null;
 
   if (!url || !anonKey) {
     return null;
@@ -23,7 +23,7 @@ export function isSupabaseConfigured(): boolean {
 }
 
 export function getApiBaseUrl(): string | null {
-  const value = readEnvValue('NEXT_PUBLIC_API_BASE_URL');
+  const value = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
   if (!value) {
     return null;
   }
