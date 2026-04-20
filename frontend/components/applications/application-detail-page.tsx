@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { ApplicationContactsPanel } from '@/components/applications/application-contacts-panel';
 import { ApplicationForm } from '@/components/applications/application-form';
+import { ApplicationTasksPanel } from '@/components/applications/application-tasks-panel';
 import {
   archiveApplication,
   formatCurrencyRange,
@@ -139,6 +141,9 @@ export function ApplicationDetailPage({ applicationId }: ApplicationDetailPagePr
           <ApplicationForm initialValues={application} onSubmit={handleUpdate} submitLabel="Save changes" />
         </div>
       ) : null}
+
+      <ApplicationContactsPanel applicationId={applicationId} />
+      <ApplicationTasksPanel applicationId={applicationId} />
     </section>
   );
 }

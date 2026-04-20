@@ -10,7 +10,7 @@ At this stage, it contains:
 - a runnable backend scaffold in `backend/`
 - an initial PostgreSQL schema and migration setup
 - Supabase Auth wiring for frontend login and protected app routes
-- MVP applications CRUD across the stack
+- MVP applications, contacts, and follow-up tasks across the stack
 - planning documents
 
 ## Frontend Setup
@@ -44,6 +44,9 @@ Copy `frontend/.env.example` to `frontend/.env.local` and set:
 - `/login` and `/signup` use Supabase email/password auth.
 - `/app/*` routes are protected by middleware that checks the current Supabase session.
 - `/app/applications` now supports list, create, view, edit, and archive flows.
+- `/app/contacts` now supports list, create, edit, and delete flows.
+- `/app/tasks` now supports list, create, edit, complete, and delete flows.
+- Application detail pages can now link contacts and add follow-up tasks.
 
 ### Frontend Tooling
 
@@ -91,11 +94,12 @@ Copy `backend/.env.example` to `backend/.env` and set at least:
 ### Backend Notes
 
 - Environment variables are read with the `APPLYPILOT_` prefix.
-- The applications API auto-creates a `profile` row for an authenticated user if one does not exist yet.
-- Application CRUD is now profile-scoped for ownership enforcement.
+- The applications, contacts, and tasks APIs auto-create a `profile` row for an authenticated user if one does not exist yet.
+- Applications, contacts, and tasks are profile-scoped for ownership enforcement.
+- Run `alembic upgrade head` after pulling the latest changes so the contacts and tasks migration is applied locally.
 
 ## Recommended Next Setup Work
 
-1. Build contacts CRUD and link contacts to applications.
-2. Build tasks and notes CRUD using the same ownership pattern.
-3. Connect the dashboard home view to real summary data.
+1. Build notes CRUD using the same ownership pattern.
+2. Connect the dashboard home view to real summary data.
+3. Add lightweight dashboards for overdue follow-ups and pipeline counts.

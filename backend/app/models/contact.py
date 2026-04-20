@@ -3,7 +3,7 @@ from __future__ import annotations
 import uuid
 from typing import TYPE_CHECKING
 
-from sqlalchemy import ForeignKey, Index, String, Uuid
+from sqlalchemy import ForeignKey, Index, String, Text, Uuid
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db.base import Base, TimestampMixin, UUIDPrimaryKeyMixin
@@ -28,10 +28,11 @@ class Contact(UUIDPrimaryKeyMixin, TimestampMixin, Base):
     email: Mapped[str | None] = mapped_column(String(320), nullable=True)
     phone: Mapped[str | None] = mapped_column(String(50), nullable=True)
     title: Mapped[str | None] = mapped_column(String(255), nullable=True)
-    company: Mapped[str | None] = mapped_column(String(255), nullable=True)
+    company_name: Mapped[str | None] = mapped_column(String(255), nullable=True)
     linkedin_url: Mapped[str | None] = mapped_column(String(2048), nullable=True)
+    notes: Mapped[str | None] = mapped_column(Text, nullable=True)
 
     profile: Mapped[Profile] = relationship(back_populates='contacts')
     application_links: Mapped[list[ApplicationContact]] = relationship(back_populates='contact', cascade='all, delete-orphan')
     tasks: Mapped[list[Task]] = relationship(back_populates='contact', cascade='all, delete-orphan')
-    notes: Mapped[list[Note]] = relationship(back_populates='contact', cascade='all, delete-orphan')
+    note_entries: Mapped[list[Note]] = relationship(back_populates='contact', cascade='all, delete-orphan')

@@ -2,7 +2,7 @@
 
 ## Status
 
-The backend now includes live health, auth identity, and MVP applications endpoints.
+The backend now includes live health, auth identity, applications, contacts, application-contact linking, and follow-up tasks endpoints.
 
 ## Implemented Endpoints
 
@@ -13,6 +13,18 @@ The backend now includes live health, auth identity, and MVP applications endpoi
 - `GET /api/v1/applications/{id}`
 - `PATCH /api/v1/applications/{id}`
 - `DELETE /api/v1/applications/{id}`
+- `POST /api/v1/applications/{id}/contacts/{contact_id}`
+- `DELETE /api/v1/applications/{id}/contacts/{contact_id}`
+- `GET /api/v1/contacts`
+- `POST /api/v1/contacts`
+- `GET /api/v1/contacts/{id}`
+- `PATCH /api/v1/contacts/{id}`
+- `DELETE /api/v1/contacts/{id}`
+- `GET /api/v1/tasks`
+- `POST /api/v1/tasks`
+- `GET /api/v1/tasks/{id}`
+- `PATCH /api/v1/tasks/{id}`
+- `DELETE /api/v1/tasks/{id}`
 
 ## Applications Query Support
 
@@ -23,6 +35,20 @@ The backend now includes live health, auth identity, and MVP applications endpoi
 - `sort_by` with `date_applied` or `next_action_due_at`
 - `sort_order` with `asc` or `desc`
 - `archive_state` with `active`, `archived`, or `all`
+
+## Contacts Query Support
+
+`GET /api/v1/contacts` supports:
+
+- `application_id` to return only contacts linked to a specific owned application
+
+## Tasks Query Support
+
+`GET /api/v1/tasks` supports:
+
+- `application_id` to return only tasks linked to a specific owned application
+- `status` with `open` or `completed`
+- `timing` with `all`, `overdue`, or `upcoming`
 
 ## Core MVP Resources
 
@@ -35,25 +61,22 @@ The initial schema is prepared for:
 - `tasks`
 - `notes`
 
-## Applications Ownership
+## Ownership Model
 
-- Applications are scoped to the authenticated user's `profile`.
+- Applications, contacts, tasks, and application-contact links are scoped to the authenticated user's `profile`.
 - The backend resolves the current user from the Supabase bearer token.
-- A `profile` row is created automatically the first time an authenticated user uses application APIs.
-- All application reads and writes are filtered by the current profile for ownership enforcement.
+- A `profile` row is created automatically the first time an authenticated user uses these APIs.
+- Task `application_id` references and contact links are validated against the current profile.
 
 ## Planned API Direction
 
-These routes remain next in line, but are not implemented yet.
+The next implementation pass should prioritize:
 
-- `GET /contacts`
-- `POST /contacts`
-- `GET /tasks`
-- `POST /tasks`
-- `GET /notes`
+- notes CRUD
+- dashboard-friendly summary endpoints
+- profile bootstrap improvements beyond the current lazy auto-create flow
 
 ## Notes
 
-- Final route names may change during implementation.
 - Authorization beyond single-user ownership is not implemented.
 - Validation schemas and response contracts are still intentionally small and MVP-focused.

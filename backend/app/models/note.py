@@ -37,4 +37,4 @@ class Note(UUIDPrimaryKeyMixin, TimestampMixin, Base):
 
     profile: Mapped[Profile] = relationship(back_populates='notes')
     application: Mapped[Application | None] = relationship(back_populates='notes')
-    contact: Mapped[Contact | None] = relationship(back_populates='notes')
+    contact: Mapped[Contact | None] = relationship(back_populates='note_entries')

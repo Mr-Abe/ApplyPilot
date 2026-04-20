@@ -9,14 +9,17 @@ This directory contains the initial `FastAPI` backend scaffold for ApplyPilot.
 - health endpoint
 - authenticated identity endpoint at `GET /api/v1/auth/me`
 - applications CRUD endpoints under `/api/v1/applications`
+- contacts CRUD endpoints under `/api/v1/contacts`
+- task CRUD endpoints under `/api/v1/tasks`
+- application-to-contact link endpoints under `/api/v1/applications/{id}/contacts/{contact_id}`
 - environment-based settings via `pydantic-settings`
 - `SQLAlchemy` models for the MVP core schema
 - `Alembic` migrations for PostgreSQL
 - starter error handling pattern
 - database session helpers for future `PostgreSQL` integration
 - Supabase bearer-token verification and current-user dependency helpers
-- profile auto-creation for authenticated application access
-- backend test coverage for health, auth, and critical application flows
+- profile auto-creation for authenticated resource access
+- backend test coverage for health, auth, and critical application, contact, and task flows
 
 ## Structure
 
@@ -56,6 +59,18 @@ backend/
 - `GET /api/v1/applications/{id}`
 - `PATCH /api/v1/applications/{id}`
 - `DELETE /api/v1/applications/{id}`
+- `POST /api/v1/applications/{id}/contacts/{contact_id}`
+- `DELETE /api/v1/applications/{id}/contacts/{contact_id}`
+- `GET /api/v1/contacts`
+- `POST /api/v1/contacts`
+- `GET /api/v1/contacts/{id}`
+- `PATCH /api/v1/contacts/{id}`
+- `DELETE /api/v1/contacts/{id}`
+- `GET /api/v1/tasks`
+- `POST /api/v1/tasks`
+- `GET /api/v1/tasks/{id}`
+- `PATCH /api/v1/tasks/{id}`
+- `DELETE /api/v1/tasks/{id}`
 
 ## Environment Variables
 
@@ -73,5 +88,7 @@ backend/
 
 - Authentication currently supports email/password sessions from `Supabase Auth`.
 - The backend verifies Supabase access tokens and exposes a current-user dependency for ownership enforcement.
-- The first authenticated applications request auto-creates a local `profile` if one does not already exist.
+- The first authenticated applications, contacts, or tasks request auto-creates a local `profile` if one does not already exist.
 - Applications support filtering, search, sorting, update, archive, and deletion.
+- Contacts support CRUD plus linking and unlinking from owned applications.
+- Tasks support CRUD, completion, due-date filtering, and profile-scoped application linking.

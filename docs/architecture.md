@@ -101,13 +101,15 @@ The backend scaffold currently includes:
 - Alembic migration setup for the current schema
 - Supabase bearer-token verification and a current-user dependency pattern
 - applications CRUD with profile-scoped ownership enforcement
+- contacts CRUD with application linking
+- tasks CRUD with due-date filtering and completion support
 
 ## Intentional Omissions
 
 The scaffold does not yet include:
 
-- contacts, tasks, and notes CRUD APIs
-- richer domain services beyond the current applications feature
+- notes CRUD APIs
+- richer domain services beyond the current applications, contacts, and tasks features
 - seed data
 - deployment configuration
 - CI workflows

@@ -24,6 +24,8 @@ from app.services.applications import (
     list_applications,
     update_application,
 )
+from app.services.contacts import link_contact_to_application, unlink_contact_from_application
+from app.schemas.contact import ContactRead
 
 router = APIRouter(prefix='/applications')
 
@@ -93,4 +95,36 @@ def delete_application_endpoint(
     profile: Annotated[Profile, Depends(get_current_profile)],
 ) -> Response:
     delete_application(session, profile_id=profile.id, application_id=application_id)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post('/{application_id}/contacts/{contact_id}', response_model=ContactRead)
+def link_contact_to_application_endpoint(
+    application_id: UUID,
+    contact_id: UUID,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> ContactRead:
+    contact = link_contact_to_application(
+        session,
+        profile_id=profile.id,
+        application_id=application_id,
+        contact_id=contact_id,
+    )
+    return ContactRead.model_validate(contact)
+
+
+@router.delete('/{application_id}/contacts/{contact_id}', status_code=status.HTTP_204_NO_CONTENT)
+def unlink_contact_from_application_endpoint(
+    application_id: UUID,
+    contact_id: UUID,
+    session: Annotated[Session, Depends(get_db_session)],
+    profile: Annotated[Profile, Depends(get_current_profile)],
+) -> Response:
+    unlink_contact_from_application(
+        session,
+        profile_id=profile.id,
+        application_id=application_id,
+        contact_id=contact_id,
+    )
     return Response(status_code=status.HTTP_204_NO_CONTENT)
