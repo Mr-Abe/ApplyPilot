@@ -8,10 +8,11 @@ This repository is in early foundation stage.
 
 - Product scope is defined at an MVP level only.
 - The frontend has been scaffolded with `Next.js`, `TypeScript`, the App Router, `Supabase Auth`, and MVP applications UI.
-- The backend has been scaffolded with `FastAPI`, `SQLAlchemy`, `Alembic`, Supabase bearer-token verification, and live MVP applications, contacts, tasks, and notes APIs.
+- The backend has been scaffolded with `FastAPI`, `SQLAlchemy`, `Alembic`, Supabase bearer-token verification, and live MVP applications, contacts, tasks, notes, and dashboard APIs.
 - The initial PostgreSQL schema and migrations are in place.
 - Contacts and follow-up tasks are now implemented end-to-end for the MVP.
 - The application detail page now works as an MVP command center with contacts, tasks, and notes.
+- The `/app` dashboard now gives a live pipeline overview and next-action visibility.
 
 ## Planned Stack
 
@@ -47,6 +48,12 @@ See `docs/architecture.md` for the proposed layout and boundaries.
 - Frontend notes: `frontend/README.md`
 - Backend notes: `backend/README.md`
 
+## Quality Checks
+
+- Frontend lint + tests: `cd frontend && npm run quality`
+- Backend tests: `cd backend && pytest`
+- Repo-level shortcut: `make quality`
+
 ## MVP Boundaries
 
 The current MVP explicitly excludes:
@@ -62,7 +69,7 @@ The current MVP explicitly excludes:
 
 ## Next Steps
 
-1. Add dashboard summaries and counts powered by live application, contact, task, and note data.
-2. Add lightweight dashboard-level metrics for overdue follow-ups and active pipelines.
-3. Connect settings and future reporting views to the live backend.
+1. Connect settings and future reporting views to the live backend.
+2. Add deployment and CI polish needed for launch readiness.
+3. Tighten UX polish and empty-state guidance across the product.
 4. Expand reporting without adding unnecessary admin complexity.

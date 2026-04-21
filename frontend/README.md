@@ -7,6 +7,7 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 - `Next.js` App Router structure
 - public marketing and auth routes
 - shared dashboard shell for `/app/*`
+- live dashboard overview on `/app`
 - Supabase Auth client setup and session handling
 - middleware-based route protection for `/app/*`
 - applications list, create, detail, edit, and archive flows
@@ -38,6 +39,12 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 5. Start the dev server with `npm run dev`.
 6. Open `http://localhost:3000`.
 
+## Quality
+
+- Run lint: `npm run lint`
+- Run tests: `npm run test`
+- Run the local frontend quality check: `npm run quality`
+
 ## Notes
 
 - Authentication uses `Supabase Auth` with email/password only.
@@ -45,3 +52,4 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 - `/app/applications` is now backed by the real applications API.
 - `/app/contacts` and `/app/tasks` are backed by live authenticated backend APIs.
 - Application details now act as a working command center for one opportunity, including contacts, tasks, and notes.
+- `/app` now shows live summary cards, status breakdown, overdue tasks, upcoming tasks, and recent applications.

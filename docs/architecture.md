@@ -71,6 +71,13 @@ ApplyPilot/
 3. The backend resolves the current profile and enforces ownership through `profile_id`.
 4. The applications service applies filtering, search, sorting, and CRUD operations against PostgreSQL.
 
+## Dashboard Flow
+
+1. An authenticated user opens `/app`.
+2. The frontend requests dashboard summary counts, status breakdown, and overdue/upcoming task lists.
+3. The dashboard surfaces only current-user data through the shared profile ownership model.
+4. Recent applications are pulled from the existing applications endpoint to keep the overview page lightweight.
+
 ## Application Workspace Flow
 
 1. An authenticated user opens one application detail page.
@@ -111,6 +118,7 @@ The backend scaffold currently includes:
 - contacts CRUD with application linking
 - tasks CRUD with due-date filtering and completion support
 - application-linked notes CRUD with note types for interview/call/follow-up context
+- dashboard summary endpoints for pipeline visibility and next actions
 
 ## Intentional Omissions
 
@@ -118,6 +126,7 @@ The scaffold does not yet include:
 
 - richer domain services beyond the current applications, contacts, and tasks features
 - richer domain services beyond the current applications, contacts, tasks, and notes features
+- richer domain services beyond the current applications, contacts, tasks, notes, and dashboard features
 - seed data
 - deployment configuration
 - CI workflows

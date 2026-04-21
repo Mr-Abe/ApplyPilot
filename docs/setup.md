@@ -10,7 +10,7 @@ At this stage, it contains:
 - a runnable backend scaffold in `backend/`
 - an initial PostgreSQL schema and migration setup
 - Supabase Auth wiring for frontend login and protected app routes
-- MVP applications, contacts, follow-up tasks, and application notes across the stack
+- MVP applications, contacts, follow-up tasks, application notes, and dashboard overview across the stack
 - planning documents
 
 ## Frontend Setup
@@ -47,16 +47,19 @@ Copy `frontend/.env.example` to `frontend/.env.local` and set:
 - `/app/contacts` now supports list, create, edit, and delete flows.
 - `/app/tasks` now supports list, create, edit, complete, and delete flows.
 - Application detail pages can now link contacts, add follow-up tasks, and manage notes from one workspace.
+- `/app` now shows a live dashboard with pipeline summary and next-action task lists.
 
 ### Frontend Tooling
 
 - `npm run lint`
+- `npm run test`
+- `npm run quality`
 - `npm run format`
 - `npm run format:check`
 
 ## Backend Setup
 
-The backend has a real `FastAPI` scaffold with `SQLAlchemy`, `Alembic`, Supabase bearer-token verification, and applications CRUD.
+The backend has a real `FastAPI` scaffold with `SQLAlchemy`, `Alembic`, Supabase bearer-token verification, and live MVP resource/dashboard endpoints.
 
 ### Prerequisites
 
@@ -91,15 +94,21 @@ Copy `backend/.env.example` to `backend/.env` and set at least:
 - Roll back one migration: `alembic downgrade -1`
 - Generate a new migration later: `alembic revision -m "describe change"`
 
+### Quality Commands
+
+- Frontend only: `cd frontend && npm run quality`
+- Backend only: `cd backend && pytest`
+- Repo-level shortcut: `make quality`
+
 ### Backend Notes
 
 - Environment variables are read with the `APPLYPILOT_` prefix.
-- The applications, contacts, and tasks APIs auto-create a `profile` row for an authenticated user if one does not exist yet.
-- Applications, contacts, and tasks are profile-scoped for ownership enforcement.
+- The applications, contacts, tasks, and notes APIs auto-create a `profile` row for an authenticated user if one does not exist yet.
+- Applications, contacts, tasks, and notes are profile-scoped for ownership enforcement.
 - Run `alembic upgrade head` after pulling the latest changes so the contacts and tasks migration is applied locally.
 
 ## Recommended Next Setup Work
 
-1. Connect the dashboard home view to real summary data.
-2. Add lightweight dashboards for overdue follow-ups and pipeline counts.
-3. Expand reporting and settings where the live backend now supports richer workflows.
+1. Add broader reporting without introducing unnecessary analytics complexity.
+2. Expand settings where the live backend now supports richer workflows.
+3. Continue tightening launch readiness around deployment, CI, and polish.

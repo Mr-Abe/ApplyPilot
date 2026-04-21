@@ -8,6 +8,7 @@ This directory contains the initial `FastAPI` backend scaffold for ApplyPilot.
 - versioned API routing under `/api/v1`
 - health endpoint
 - authenticated identity endpoint at `GET /api/v1/auth/me`
+- dashboard summary endpoints under `/api/v1/dashboard/*`
 - applications CRUD endpoints under `/api/v1/applications`
 - contacts CRUD endpoints under `/api/v1/contacts`
 - task CRUD endpoints under `/api/v1/tasks`
@@ -55,6 +56,10 @@ backend/
 
 - `GET /api/v1/health`
 - `GET /api/v1/auth/me`
+- `GET /api/v1/dashboard/summary`
+- `GET /api/v1/dashboard/status-breakdown`
+- `GET /api/v1/dashboard/tasks/overdue`
+- `GET /api/v1/dashboard/tasks/upcoming`
 - `GET /api/v1/applications`
 - `POST /api/v1/applications`
 - `GET /api/v1/applications/{id}`
@@ -89,12 +94,18 @@ backend/
 - Apply all migrations: `alembic upgrade head`
 - Roll back one migration: `alembic downgrade -1`
 
+## Quality
+
+- Run backend tests: `pytest`
+- Run repo-level checks from the root: `make quality`
+
 ## Notes
 
 - Authentication currently supports email/password sessions from `Supabase Auth`.
 - The backend verifies Supabase access tokens and exposes a current-user dependency for ownership enforcement.
-- The first authenticated applications, contacts, or tasks request auto-creates a local `profile` if one does not already exist.
+- The first authenticated applications, contacts, tasks, or notes request auto-creates a local `profile` if one does not already exist.
 - Applications support filtering, search, sorting, update, archive, and deletion.
 - Contacts support CRUD plus linking and unlinking from owned applications.
 - Tasks support CRUD, completion, due-date filtering, and profile-scoped application linking.
 - Notes support application-scoped CRUD with simple typed notes for general, interview, call, and follow-up context.
+- Dashboard endpoints provide a lightweight pipeline overview without introducing reporting dependencies.

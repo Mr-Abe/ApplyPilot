@@ -17,3 +17,4 @@ All notable changes to this repository will be documented in this file.
 - Added MVP contacts CRUD with application linking across the backend and frontend
 - Added MVP follow-up tasks CRUD with completion and overdue/upcoming filtering across the backend and frontend
 - Added MVP application notes CRUD with typed notes and integrated the application detail page into a fuller command center workspace
+- Added MVP dashboard endpoints and a live `/app` overview with summary cards, status breakdown, overdue tasks, upcoming tasks, and recent applications

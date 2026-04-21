@@ -2,12 +2,16 @@
 
 ## Status
 
-The backend now includes live health, auth identity, applications, contacts, application-contact linking, follow-up tasks, and application notes endpoints.
+The backend now includes live health, auth identity, applications, contacts, application-contact linking, follow-up tasks, application notes, and dashboard summary endpoints.
 
 ## Implemented Endpoints
 
 - `GET /api/v1/health`
 - `GET /api/v1/auth/me`
+- `GET /api/v1/dashboard/summary`
+- `GET /api/v1/dashboard/status-breakdown`
+- `GET /api/v1/dashboard/tasks/overdue`
+- `GET /api/v1/dashboard/tasks/upcoming`
 - `GET /api/v1/applications`
 - `POST /api/v1/applications`
 - `GET /api/v1/applications/{id}`
@@ -29,6 +33,15 @@ The backend now includes live health, auth identity, applications, contacts, app
 - `GET /api/v1/tasks/{id}`
 - `PATCH /api/v1/tasks/{id}`
 - `DELETE /api/v1/tasks/{id}`
+
+## Dashboard Support
+
+Dashboard endpoints support:
+
+- summary counts for active applications and open/overdue/upcoming tasks
+- status breakdown for active application pipeline stages
+- overdue task list for immediate follow-up work
+- upcoming task list for near-term planning
 
 ## Applications Query Support
 
@@ -83,7 +96,6 @@ The initial schema is prepared for:
 
 The next implementation pass should prioritize:
 
-- dashboard-friendly summary endpoints
 - profile bootstrap improvements beyond the current lazy auto-create flow
 - optional contact-linked notes if they become necessary beyond the current application workspace
 

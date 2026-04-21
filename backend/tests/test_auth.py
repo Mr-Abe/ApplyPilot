@@ -52,3 +52,18 @@ def test_auth_me_returns_current_user(monkeypatch) -> None:
     }
 
     get_settings.cache_clear()
+
+
+def test_core_resources_require_authentication() -> None:
+    client = TestClient(create_application())
+
+    responses = [
+        client.get('/api/v1/applications'),
+        client.get('/api/v1/contacts'),
+        client.get('/api/v1/tasks'),
+        client.get('/api/v1/dashboard/summary'),
+    ]
+
+    for response in responses:
+        assert response.status_code == 401
+        assert response.json()['error']['code'] == 'authentication_required'

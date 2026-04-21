@@ -1,4 +1,4 @@
-import { AuthSessionPanel } from '@/components/auth/auth-session-panel';
+import { DashboardHome } from '@/components/dashboard/dashboard-home';
 import { DashboardPageHeader } from '@/components/ui/dashboard-page-header';
 
 export default function AppHomePage() {
@@ -6,12 +6,9 @@ export default function AppHomePage() {
     <section className="page-stack">
       <DashboardPageHeader
         title="Dashboard"
-        description="This protected area now expects a Supabase-authenticated session and is ready for real application data wiring."
+        description="Scan the pipeline, spot overdue follow-ups, and see what needs attention next."
       />
-      <AuthSessionPanel />
-      <div className="card empty-state">
-        <p>Next up is connecting applications, contacts, notes, and tasks to real backend CRUD endpoints.</p>
-      </div>
+      <DashboardHome />
     </section>
   );
 }
