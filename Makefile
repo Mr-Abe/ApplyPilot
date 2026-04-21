@@ -6,13 +6,13 @@ quality-frontend:
 	cd frontend && npm run quality
 
 quality-backend:
-	cd backend && if [ -x .venv/bin/pytest ]; then .venv/bin/pytest; else pytest; fi
+	cd backend && if [ -x venv/bin/pytest ]; then venv/bin/pytest; else pytest; fi
 
 test-frontend:
 	cd frontend && npm run test
 
 test-backend:
-	cd backend && if [ -x .venv/bin/pytest ]; then .venv/bin/pytest; else pytest; fi
+	cd backend && if [ -x venv/bin/pytest ]; then venv/bin/pytest; else pytest; fi
 
 lint-frontend:
 	cd frontend && npm run lint

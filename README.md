@@ -44,6 +44,7 @@ See `docs/architecture.md` for the proposed layout and boundaries.
 - Architecture: `docs/architecture.md`
 - API planning: `docs/api.md`
 - Setup notes: `docs/setup.md`
+- Deployment notes: `docs/deployment.md`
 - Delivery plan: `ROADMAP.md`
 - Frontend notes: `frontend/README.md`
 - Backend notes: `backend/README.md`
@@ -53,6 +54,14 @@ See `docs/architecture.md` for the proposed layout and boundaries.
 - Frontend lint + tests: `cd frontend && npm run quality`
 - Backend tests: `cd backend && pytest`
 - Repo-level shortcut: `make quality`
+
+## CI And Deployment
+
+- CI runs in `.github/workflows/ci.yml`
+- Frontend target: `Vercel`
+- Backend target: `Render`
+- Database/auth target: `Supabase`
+- Deploy order and environment variable mapping live in `docs/deployment.md`
 
 ## MVP Boundaries
 

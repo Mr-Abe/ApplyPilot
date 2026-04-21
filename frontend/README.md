@@ -41,7 +41,7 @@ This directory contains the initial `Next.js` + `TypeScript` frontend scaffold f
 
 ## Quality
 
-- Run lint: `npm run lint`
+- Run lint with the `ESLint` CLI: `npm run lint`
 - Run tests: `npm run test`
 - Run the local frontend quality check: `npm run quality`
 

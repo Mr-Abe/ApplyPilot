@@ -1,10 +1,12 @@
 import time
 import uuid
+from types import SimpleNamespace
 
 import jwt
 from fastapi.testclient import TestClient
 
 from app.core.config import get_settings
+from app.core.security import verify_supabase_access_token
 from app.main import create_application
 
 
@@ -67,3 +69,41 @@ def test_core_resources_require_authentication() -> None:
     for response in responses:
         assert response.status_code == 401
         assert response.json()['error']['code'] == 'authentication_required'
+
+
+def test_verify_supabase_access_token_uses_jwks_for_es256(monkeypatch) -> None:
+    supabase_url = 'https://example.supabase.co'
+    user_id = uuid.uuid4()
+    captured: dict[str, str] = {}
+
+    class DummyJWKClient:
+        def __init__(self, url: str) -> None:
+            captured['jwks_url'] = url
+
+        def get_signing_key_from_jwt(self, token: str) -> SimpleNamespace:
+            captured['token'] = token
+            return SimpleNamespace(key='public-key')
+
+    monkeypatch.setenv('APPLYPILOT_SUPABASE_URL', supabase_url)
+    monkeypatch.delenv('APPLYPILOT_SUPABASE_JWT_SECRET', raising=False)
+    get_settings.cache_clear()
+
+    monkeypatch.setattr(jwt, 'get_unverified_header', lambda _token: {'alg': 'ES256'})
+    monkeypatch.setattr(jwt, 'PyJWKClient', DummyJWKClient)
+    monkeypatch.setattr(
+        jwt,
+        'decode',
+        lambda token, key, algorithms, audience, issuer, options: {
+            'sub': str(user_id),
+            'email': 'test@example.com',
+            'role': 'authenticated',
+        },
+    )
+
+    payload = verify_supabase_access_token('es256-token')
+
+    assert payload['sub'] == str(user_id)
+    assert captured['token'] == 'es256-token'
+    assert captured['jwks_url'] == f'{supabase_url}/auth/v1/.well-known/jwks.json'
+
+    get_settings.cache_clear()

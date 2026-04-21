@@ -80,8 +80,8 @@ Copy `backend/.env.example` to `backend/.env` and set at least:
 ### Run The Backend
 
 1. Change into `backend/`.
-2. Create and activate a virtual environment.
-3. Install dependencies with `pip install -e '.[dev]'`.
+2. Create and activate a virtual environment with `python -m venv venv`.
+3. Install dependencies with `./venv/bin/pip install -e '.[dev]'`.
 4. Copy `.env.example` to `.env`.
 5. Run database migrations with `alembic upgrade head`.
 6. Start the API with `uvicorn app.main:app --reload`.
@@ -105,7 +105,19 @@ Copy `backend/.env.example` to `backend/.env` and set at least:
 - Environment variables are read with the `APPLYPILOT_` prefix.
 - The applications, contacts, tasks, and notes APIs auto-create a `profile` row for an authenticated user if one does not exist yet.
 - Applications, contacts, tasks, and notes are profile-scoped for ownership enforcement.
-- Run `alembic upgrade head` after pulling the latest changes so the contacts and tasks migration is applied locally.
+- Current Supabase production auth uses asymmetric JWTs verified through the JWKS endpoint at `/auth/v1/.well-known/jwks.json`.
+- `APPLYPILOT_SUPABASE_JWT_SECRET` is only needed for legacy symmetric verification compatibility.
+- Run `alembic upgrade head` after pulling the latest changes so new schema changes are applied before starting the backend.
+
+## Deployment Notes
+
+See `docs/deployment.md` for:
+
+- `GitHub Actions` CI
+- `Vercel` frontend deployment
+- `Render` backend deployment
+- `Supabase` database/auth configuration
+- production env var mapping and deploy order
 
 ## Recommended Next Setup Work
 

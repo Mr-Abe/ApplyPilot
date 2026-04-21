@@ -46,8 +46,8 @@ backend/
 ## Local Setup
 
 1. Change into `backend/`.
-2. Create a virtual environment.
-3. Install dependencies with `pip install -e '.[dev]'`.
+2. Create a virtual environment with `python -m venv venv`.
+3. Install dependencies with `./venv/bin/pip install -e '.[dev]'`.
 4. Copy `.env.example` to `.env` and adjust values as needed.
 5. Run migrations with `alembic upgrade head`.
 6. Run the API with `uvicorn app.main:app --reload`.
@@ -87,7 +87,7 @@ backend/
 - `APPLYPILOT_DATABASE_URL`: PostgreSQL connection string used by the app and Alembic
 - `APPLYPILOT_DATABASE_ECHO`: optional SQL logging toggle for local development
 - `APPLYPILOT_SUPABASE_URL`: Supabase project URL used to validate token issuer
-- `APPLYPILOT_SUPABASE_JWT_SECRET`: Supabase JWT secret used to verify bearer tokens
+- `APPLYPILOT_SUPABASE_JWT_SECRET`: optional legacy symmetric JWT secret; current ES256 production auth uses JWKS from `APPLYPILOT_SUPABASE_URL`
 
 ## Local Migration Commands
 
@@ -98,6 +98,10 @@ backend/
 
 - Run backend tests: `pytest`
 - Run repo-level checks from the root: `make quality`
+
+## Deployment
+
+See `../docs/deployment.md` for the `Render` deployment flow, required environment variables, and migration-before-start order.
 
 ## Notes
 

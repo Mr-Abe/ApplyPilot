@@ -18,3 +18,4 @@ All notable changes to this repository will be documented in this file.
 - Added MVP follow-up tasks CRUD with completion and overdue/upcoming filtering across the backend and frontend
 - Added MVP application notes CRUD with typed notes and integrated the application detail page into a fuller command center workspace
 - Added MVP dashboard endpoints and a live `/app` overview with summary cards, status breakdown, overdue tasks, upcoming tasks, and recent applications
+- Added CI and deployment foundations with GitHub Actions, ESLint CLI migration, Render/Vercel/Supabase deployment notes, and backend JWKS-aligned auth verification

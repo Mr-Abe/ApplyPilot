@@ -9,9 +9,9 @@ from app.core.errors import AppError
 from app.schemas.auth import CurrentUser
 
 
-def ensure_supabase_auth_is_configured() -> tuple[str, str]:
+def get_supabase_auth_context() -> tuple[str, str | None]:
     settings = get_settings()
-    if not settings.supabase_url or not settings.supabase_jwt_secret:
+    if not settings.supabase_url:
         raise AppError(
             status_code=500,
             code="supabase_auth_not_configured",
@@ -22,7 +22,7 @@ def ensure_supabase_auth_is_configured() -> tuple[str, str]:
 
 
 def verify_supabase_access_token(token: str) -> dict[str, Any]:
-    supabase_url, jwt_secret = ensure_supabase_auth_is_configured()
+    supabase_url, jwt_secret = get_supabase_auth_context()
     issuer = f'{supabase_url}/auth/v1'
     jwks_url = f'{supabase_url}/auth/v1/.well-known/jwks.json'
 
@@ -35,6 +35,12 @@ def verify_supabase_access_token(token: str) -> dict[str, Any]:
             signing_key = jwks_client.get_signing_key_from_jwt(token)
             key = signing_key.key
         else:
+            if not jwt_secret:
+                raise AppError(
+                    status_code=500,
+                    code='supabase_auth_not_configured',
+                    message='Supabase JWT secret is required for symmetric token verification.',
+                )
             key = jwt_secret
 
         return jwt.decode(
@@ -45,6 +51,8 @@ def verify_supabase_access_token(token: str) -> dict[str, Any]:
             issuer=issuer,
             options={'require': ['exp', 'sub']},
         )
+    except AppError:
+        raise
     except InvalidTokenError as exc:
         raise AppError(
             status_code=401,
